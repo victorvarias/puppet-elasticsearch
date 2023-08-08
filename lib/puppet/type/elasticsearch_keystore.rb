@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 require 'puppet/parameter/boolean'
 
@@ -48,6 +48,7 @@ Puppet::Type.newtype(:elasticsearch_keystore) do
       ret << "added: #{added_settings.join(', ')} " unless added_settings.empty?
 
       removed_settings = currentvalue - newvalue
+      removed_settings = removed_settings - ["keystore.seed"]
       unless removed_settings.empty?
         ret << if resource[:purge]
                  "removed: #{removed_settings.join(', ')}"
